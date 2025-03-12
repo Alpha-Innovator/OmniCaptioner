@@ -1,0 +1,30 @@
+decord; platform_machine != 'arm64'
+eva-decord; platform_machine == 'arm64'
+
+huggingface_hub
+imageio
+matplotlib
+numpy
+omegaconf
+openai
+opencv-python>=4.4.0.46
+openpyxl
+pandas
+pillow
+portalocker
+protobuf
+python-dotenv
+requests
+rich
+sentencepiece
+setuptools
+sty
+tabulate
+tiktoken
+timeout-decorator
+torch
+tqdm
+transformers
+typing_extensions
+validators
+xlsxwriter
