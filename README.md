@@ -1,5 +1,3 @@
-# OmniCaptioner
-
 
 
 <div align="center">
@@ -74,7 +72,7 @@ CUDA_VISIBLE_DEVICES=0 python src/inference_single_image.py \
 
 cd VLMEvalkit
 conda create -n VLMEvalkit python=3.9
-conda activate OmniCap
+conda activate VLMEvalkit
 pip install -e .
 
 CUDA_VISIBLE_DEVICES=0  nohup python run.py --data MMMU_DEV_VAL --model Omnicaptioner-qwen2-5-3B --verbose > output_omnicap_qwen2-5-3B_MMMU_DEV_VAL.log 2>&1 &
