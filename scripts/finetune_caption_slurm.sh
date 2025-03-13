@@ -1,5 +1,3 @@
-
-
 export NCCL_DEBUG=info
 #export NCCL_SOCKET_IFNAME=ib0,eth
 export NCCL_P2P_DISABLE=0

@@ -6,14 +6,10 @@
 </div>
 <div align="center">
 
-[![Static Badge](https://img.shields.io/badge/OmniCaptioner%20checkpoints-Model(7B)-yellow?logoColor=violet&label=%F0%9F%A4%97%20OmniCaptioner%20checkpoints)](https://huggingface.co/)
-
+<p align="center">
+💜 <a href="https://alpha-innovator.github.io/OmniCaptioner-project-page/"><b>HomePage</b></a>&nbsp&nbsp | &nbsp&nbsp🤗 <a href="https://huggingface.co/U4R/OmniCaptioner">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://arxiv.org/abs">Paper</a>&nbsp&nbsp
+</p>
 </div>
-
-
-
-
-
 
 
 ## 📰 News
