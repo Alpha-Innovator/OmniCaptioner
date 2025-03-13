@@ -63,18 +63,7 @@ class DataProcessor:
             # 检查并计算 image_token_num
             image_token_num = 0
             if image_path:
-                #if 'size' in data_item:
-                #    if 'lc2' not in image_path:
-                #        file_path =  'lc2:'+image_path
-                #    else:
-                #        file_path =  image_path
-                #    width, height = data_item['size']
-                #    if isinstance(width, str):
-                #        width = int(width)
-                #    if isinstance(height, str):
-                #        height = int(height)
-                #    image_token_num += (width * height) // (28 * 28)
-                #else:
+                
                 try:
                     if 'lc2' not in image_path:
                         file_path =  'lc2:'+image_path
@@ -120,7 +109,7 @@ if __name__ == "__main__":
         raw_data = f.readlines()
 
     # 加载处理器
-    processor = AutoProcessor.from_pretrained("/mnt/petrelfs/luyiting/ckt/Qwen2-VL-7B-Instruct/")
+    processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-7B-Instruct/")
 
     # 实例化并处理指定分区
     data_processor = DataProcessor(raw_data, processor)
