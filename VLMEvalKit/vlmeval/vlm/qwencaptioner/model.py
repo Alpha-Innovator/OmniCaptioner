@@ -257,8 +257,7 @@ class Qwen2VLCap(Qwen2VLPromptMixin, BaseModel):
         retry_count = 0
         #image_caption_batch = ""
         # Define the output file
-        #output_file = f'/cpfs01/user/zhangbo/code_luyiting/VLMEvalKit_new/outputs/Omnicaptioner_ckt49000_stage1/{dataset}_caption.jsonl'
-        output_file = f'/cpfs01/user/zhangbo/code_luyiting/VLMEvalKit_new/outputs/qwencaptioner-instruct{dataset}_caption.jsonl'
+        output_file = f'./outputs/qwencaptioner-instruct{dataset}_caption.jsonl'
         caption_data=[]
 
         # Check if the output file exists

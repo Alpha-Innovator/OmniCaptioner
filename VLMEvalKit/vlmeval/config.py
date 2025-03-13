@@ -343,36 +343,36 @@ qwen2vl_series = {
     
     'Omnicaptioner-deepseek-distill-32B': partial(Qwen2VLOmniCap, \
           model_path='ouput_omnicap_final/', \
-          model_path1= '/mnt/workspace/hug_ckpts/DeepSeek-R1-Distill-Qwen-32B/', min_pixels=2*28*28, max_pixels=6400*28*28, \
+          model_path1= 'deepseek-ai/DeepSeek-R1-Distill-Qwen-32B', min_pixels=2*28*28, max_pixels=6400*28*28, \
           system_prompt = 'You are a helpful assistant.', use_vllm=True,tensor_parallel_size= 2,\
           ),
     
     'Omnicaptioner-deepseek-distill-70B': partial(Qwen2VLOmniCap, \
           model_path='ouput_omnicap_final/', \
-          model_path1= '/mnt/workspace/hug_ckpts/DeepSeek-R1-Distill-Llama-70B/', min_pixels=2*28*28, max_pixels=6400*28*28, \
+          model_path1= 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B', min_pixels=2*28*28, max_pixels=6400*28*28, \
           system_prompt = 'You are a helpful assistant.', use_vllm=True, tensor_parallel_size= 8, \
           ),
 
     
     'Omnicaptioner-deepseek-distill-7B': partial(Qwen2VLOmniCap, \
           model_path='ouput_omnicap_final/',  \
-          model_path1= '/mnt/petrelfs/luyiting/ckt/DeepSeek-R1-Distill-Qwen-7B/', min_pixels=2*28*28, max_pixels=6400*28*28, \
+          model_path1= 'deepseek-ai/DeepSeek-R1-Distill-Qwen-7B', min_pixels=2*28*28, max_pixels=6400*28*28, \
           system_prompt = 'You are a helpful assistant.', use_vllm=True,tensor_parallel_size= 1, \
           ),
    
     'Omnicaptioner-qwen2-5-3B': partial(Qwen2VLOmniCap_cot, \
           model_path='ouput_omnicap_final/', \
-          model_path1= '/mnt/petrelfs/luyiting/ckt/Qwen2.5-3B-Instruct/', min_pixels=2*28*28, max_pixels=6400*28*28, \
+          model_path1= 'Qwen/Qwen2.5-3B-Instruct', min_pixels=2*28*28, max_pixels=6400*28*28, \
           system_prompt = 'You are a helpful assistant.' \
           ),
     'Omnicaptioner-qwen-2-5-7B': partial(Qwen2VLOmniCap_cot, \
           model_path='ouput_omnicap_final/', \
-          model_path1= '/mnt/petrelfs/luyiting/ckt/Qwen2.5-7B-Instruct/', min_pixels=2*28*28, max_pixels=6400*28*28, \
+          model_path1= 'Qwen/Qwen2.5-7B-Instruct', min_pixels=2*28*28, max_pixels=6400*28*28, \
           system_prompt = 'You are a helpful assistant.', use_vllm=False,tensor_parallel_size= 1, \
           ),
     'Omnicaptioner-qwen-2-5-32B': partial(Qwen2VLOmniCap_cot, \
           model_path='ouput_omnicap_final/', \
-          model_path1= '/mnt/petrelfs/luyiting/ckt/Qwen2.5-32B-Instruct/', min_pixels=2*28*28, max_pixels=6400*28*28, \
+          model_path1= 'Qwen/Qwen2.5-32B-Instruct', min_pixels=2*28*28, max_pixels=6400*28*28, \
           system_prompt = 'You are a helpful assistant.', use_vllm=False,tensor_parallel_size= 2, \
           ),
 
@@ -380,12 +380,12 @@ qwen2vl_series = {
     
     'qwencaptioner-instruct-qwen2-5-3B': partial(Qwen2VLCap, \
           model_path='ouput_omnicap_final/', \
-          model_path1= '/mnt/petrelfs/luyiting/ckt/Qwen2.5-3B-Instruct/', min_pixels=4*28*28, max_pixels=6400*28*28, \
+          model_path1= 'Qwen/Qwen2.5-3B-Instruct', min_pixels=4*28*28, max_pixels=6400*28*28, \
           system_prompt = 'You are a helpful assistant.' \
           ),
     'qwencaptioner-instruct-Deepseek-Distill-Qwen-7B': partial(Qwen2VLCap, \
           model_path='ouput_omnicap_final/', \
-          model_path1= '/mnt/petrelfs/luyiting/ckt/DeepSeek-R1-Distill-Qwen-7B/', min_pixels=4*28*28, max_pixels=6400*28*28, \
+          model_path1= 'deepseek-ai/DeepSeek-R1-Distill-Qwen-7B', min_pixels=4*28*28, max_pixels=6400*28*28, \
           system_prompt = 'You are a helpful assistant.' \
           ),
 
