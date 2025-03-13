@@ -17,7 +17,7 @@
 
 
 ## 📊 Quantatitive Performance
-![Quantitative Results](assets/quantitative.png)
+![Quantitative Results](assets/quantitative.jpg)
 
 
 
