@@ -16,7 +16,7 @@ export PYTHONFAULTHANDLER=1
 export CUDA_LAUNCH_BLOCKING=0
 export OMPI_MCA_mtl_base_verbose=1
 export OMP_DYNAMIC=TRUE
-export OMP_NUM_THREADS=8 #和cpus-per-task保持一致
+export OMP_NUM_THREADS=8 
 
 
 MASTER_ADDR=$(sinfo -Nh -n $SLURM_NODELIST | head -n 1 | awk '{print $1}')
