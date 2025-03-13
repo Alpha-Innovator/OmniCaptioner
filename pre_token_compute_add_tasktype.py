@@ -65,10 +65,7 @@ class DataProcessor:
             if image_path:
                 
                 try:
-                    if 'lc2' not in image_path:
-                        file_path =  'lc2:'+image_path
-                    else:
-                        file_path =  image_path
+                
                     with Image.open(read_general(file_path)) as img:
                         width, height = img.size
                         image_token_num += (width * height) // (28 * 28)
