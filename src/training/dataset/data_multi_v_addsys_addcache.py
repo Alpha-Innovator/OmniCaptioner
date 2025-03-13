@@ -16,7 +16,7 @@ from pathlib import Path
 import warnings
 import h5py
 from .dataset_from_xllmx import FinetuneConversationDataset
-
+from .build_sys_prompt import build_sys_prompt
 def truncate_sequence(input_ids, labels, max_length, eos_token_id):
     if input_ids.size(0) > max_length:
         input_ids = input_ids[:max_length-1]
@@ -175,12 +175,9 @@ class QwenItemProcessor:
 
             if isinstance(image_files, str):
                 image_files = [image_files]
-            num_images = len(image_files)   # 获取 image 列表中的元素个数
+            num_images = len(image_files)   
 
-            # 根据 image 的数量生成相应数量的 <image> 标签，并用 \n 分隔
-            #image_tags = "<image>\n" * num_images
-            #sources["conversations"][0]["value"] = image_tags + sources["conversations"][0]["value"]
-            # 根据 image 的数量生成相应数量的 <image> 标签，并用 \n 分隔
+            
             no_image_flag = True
             for con_item in sources["conversations"]:
                 if '<image>' in con_item["value"]:
@@ -198,12 +195,7 @@ class QwenItemProcessor:
             max_pixel = self.max_pixel // num_images
 
             for image_file in image_files:
-                #if not os.path.exists(image_file):
-                    #if not image_file.startswith("s3://"):
-                    #    image_file = os.path.join(image_folder, image_file)
-                    #else:
-                    #    image_file = image_file
-                    #image_file = os.path.join(image_folder, image_file)
+                
                 images.append(get_image_info(image_file, min_pixel, max_pixel))
 
         elif "video" in sources:
@@ -218,10 +210,8 @@ class QwenItemProcessor:
             if isinstance(video_files, str):
                 video_files = [video_files]
             
-            num_videos = len(video_files)   # 获取 image 列表中的元素个数
-            # 根据 image 的数量生成相应数量的 <image> 标签，并用 \n 分隔
-            #video_tags = "<video>\n" * num_videos
-            #sources["conversations"][0]["value"] = video_tags + sources["conversations"][0]["value"]
+            num_videos = len(video_files)   
+            
             no_video_flag = True
             for con_item in sources["conversations"]:
                 if '<video>' in con_item["value"]:
@@ -233,11 +223,7 @@ class QwenItemProcessor:
 
             videos = []
             for video_file in video_files:
-                #if not os.path.exists(video_file):
-                    #if not video_file.startswith("s3://"):
-                    #    video_file = os.path.join(video_folder, video_file)
-                    #else:
-                #   print(f'{video_file} is not exist')
+                
                 videos.append(get_video_info(video_file, self.max_pixel, self.data_args.fps))
             
         else:
@@ -253,85 +239,8 @@ class QwenItemProcessor:
 
         # Qwen2-VL uses a default system message so I've added this.
         system_prompt=''
-        if self.flag=='long':
-            system_prompt =SYSTEM_MESSAGE_Detailed
-        if self.flag=='medium':
-            system_prompt =SYSTEM_MESSAGE_Medium   
-        if self.flag=='short':
-            system_prompt =SYSTEM_MESSAGE_Short   
-        if self.flag=='tag':
-            system_prompt =SYSTEM_MESSAGE_Tag   
-        if self.flag=='long_CN':
-            system_prompt =SYSTEM_MESSAGE_Detailed_CN   
-        if self.flag=='medium_CN':
-            system_prompt =SYSTEM_MESSAGE_Medium_CN   
-        if self.flag=='short_CN':
-            system_prompt =SYSTEM_MESSAGE_Short_CN 
-        if self.flag=='tag_CN':
-            system_prompt =SYSTEM_MESSAGE_Tag_CN
 
-
-        if self.flag=='blip3long' or self.flag=='densefusionlong':
-            system_prompt =SYSTEM_MESSAGE_Detailed_Natural
-        if self.flag=='blip3medium' or self.flag=='densefusionmedium':
-            system_prompt =SYSTEM_MESSAGE_Medium_Natural   
-        if self.flag=='blip3short' or self.flag== 'densefusionshort':
-            system_prompt =SYSTEM_MESSAGE_Short_Natural   
-        if self.flag=='blip3tag' or self.flag=='densefusiontag':
-            system_prompt =SYSTEM_MESSAGE_Tag_Natural   
-        if self.flag=='blip3long_CN' or self.flag=='densefusionlong_CN':
-            system_prompt =SYSTEM_MESSAGE_Detailed_CN_Natural   
-        if self.flag=='blip3medium_CN' or self.flag=='densefusionmedium_CN':
-            system_prompt =SYSTEM_MESSAGE_Medium_CN_Natural   
-        if self.flag=='blip3short_CN' or self.flag== 'densefusionshort_CN':
-            system_prompt =SYSTEM_MESSAGE_Short_CN_Natural 
-        if self.flag=='blip3tag_CN' or self.flag=='densefusiontag_CN':
-            system_prompt =SYSTEM_MESSAGE_Tag_CN_Natural
-        
-        if self.flag=='dense_ocr_data' or  self.flag=='chartx' or self.flag == 'TinyChart' or self.flag == 'TincyChart':
-            system_prompt = SYSTEM_MESSAGE_OCR_chart_math #SYSTEM_MESSAGE_OCR_chart_math  (11k+152k)
-        
-        if self.flag=='MMtab' or  self.flag=='vrdu_table_chinese_2_w_caption' or self.flag=='vrdu_table_chinese_2_wo_caption' or self.flag=='vrdu_table_large_table' \
-         or self.flag=='vrdu_table' :
-            system_prompt = SYSTEM_MESSAGE_OCR_table_math #SYSTEM_MESSAGE_OCR_chart_math  (1M+136k+13k)
-        if self.flag=='vrdu_table_final' :
-            system_prompt = SYSTEM_MESSAGE_OCR_table_math #SYSTEM_MESSAGE_OCR_vrdu_table_final  
-
-        if self.flag=='TincyChart_CN' or  self.flag=='vrdu_table_CN' or self.flag=='vrdu_equation_CN': 
-            system_prompt = SYSTEM_MESSAGE_OCR_chart_math_CN #SYSTEM_MESSAGE_OCR_chart_math 
-            
-        if self.flag=='vrdu_equation' :
-            system_prompt = SYSTEM_MESSAGE_OCR_equation_math #SYSTEM_MESSAGE_OCR_vrdu_equation  (5M) 
-        if self.flag=='mathgeo' or self.flag=='AutoGeo' or self.flag == 'Mavis_geo' :
-            system_prompt = SYSTEM_MESSAGE_OCR_mathgeo_math #SYSTEM_MESSAGE_OCR_vrdu_equation  (102k)
-        if self.flag=='chemdata' :
-            system_prompt =SYSTEM_MESSAGE_chemdata 
-
-        if self.flag=='poster0322_10k' or   self.flag=='poster0408_4k':
-            system_prompt =SYSTEM_MESSAGE_OCR_textqa #SYSTEM_MESSAGE_OCR_poster  
-        if self.flag=='vrdu_texteq' :
-            system_prompt =SYSTEM_MESSAGE_OCR_textqa  
-        if self.flag=='infographics' :
-            system_prompt =SYSTEM_MESSAGE_OCR_textqa
-        if self.flag=='ocr_v2_35k_v3_20k' :
-            system_prompt =SYSTEM_MESSAGE_OCR_textqa  
-        if self.flag=='pdf_pageocr':
-            system_prompt =SYSTEM_MESSAGE_OCR_textqa  
-        
-        if self.flag=='wokong':
-            system_prompt =SYSTEM_MESSAGE_OCR_Image #SYSTEM_MESSAGE_OCR_poster  
-        if self.flag=='wokong_CN':
-            system_prompt =SYSTEM_MESSAGE_OCR_Image_CN #SYSTEM_MESSAGE_OCR_poster 
-        if self.flag=='poster_CN':
-            system_prompt =SYSTEM_MESSAGE_OCR_Image_CN #SYSTEM_MESSAGE_OCR_poster  
-        
-        if self.flag=='Camera_Caption':
-            system_prompt =SYSTEM_MESSAGE_VIDEO_ALL #SYSTEM_MESSAGE_OCR_poster  
-        
-        if self.flag == 'guiact':
-            system_prompt = SYSTEM_MESSAGE_UI
-        if self.flag == 'guiact_CN':
-            system_prompt = SYSTEM_MESSAGE_UI_CN
+        system_prompt = build_sys_prompt(self.flag)
 
 
         if len(system_prompt) > 0:
@@ -361,7 +270,7 @@ class QwenItemProcessor:
             if '<|image_pad|>' in user_input or '<|video_pad|>' in user_input:
 
 
-                # 统计 <|image_pad|> 和 <|video_pad|> 出现的次数
+                
                 image_pad_count = user_input.count('<|image_pad|>')
                 video_pad_count = user_input.count('<|video_pad|>')
 
@@ -476,7 +385,7 @@ class DataCollatorForSupervisedDataset(object):
             pixel_values = torch.cat(batch_pixel_values, dim=0)
             image_thw = torch.cat(batch_image_thw, dim=0)
         
-        print('input_ids',input_ids.shape)
+        #print('input_ids',input_ids.shape)
        
         return {
             'input_ids': input_ids,
