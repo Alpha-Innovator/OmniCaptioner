@@ -25,7 +25,7 @@ def init_ceph_client_if_needed():
         st = time.time()
         from petrel_client.client import Client  # noqa
 
-        client = Client("/mnt/petrelfs/luyiting/petreloss.conf")
+        client = Client("petreloss.conf") #for ceph data 
         ed = time.time()
         logger.info(f"initialize client cost {ed - st:.2f} s")
 
