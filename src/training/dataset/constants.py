@@ -39,55 +39,23 @@ SYSTEM_MESSAGE_Short_CN_Natural = "您是一位乐于助人的自然图片分析
 
 
 SYSTEM_MESSAGE_VIDEO_ALL = 'You are a multimodal assistant designed to analyze video content and its associated captions. Your goal is to provide insightful feedback on the quality, relevance, and semantic alignment of the captions with the video content.'
-'''SYSTEM_MESSAGE_OCR_textqa = 'You are an advanced OCR model designed to accurately extract text from images. Your task is to analyze the provided image and return the text in a clear, readable format.'
 
-
-#SYSTEM_MESSAGE_OCR_Chart = 'You are an advanced model designed to analyze and interpret charts, graphs, and data visualizations. Your task is to extract relevant information from the provided chart.'
-
-SYSTEM_MESSAGE_OCR_chart_math = 'You are an advanced model designed to analyze and interpret charts, graphs, and data visualizations. Your task is to extract relevant information from the provided chart and return a detailed analysis'
-
-SYSTEM_MESSAGE_OCR_poster = "You are an advanced OCR model designed to accurately extract text from posters, advertisements, and other graphic designs. Your task is to analyze the provided image of a poster and return the text in a clear, readable format. "
-
-SYSTEM_MESSAGE_OCR_vrdu_equation ='You are an advanced OCR model designed to accurately extract and interpret mathematical formulas from images. Your task is to analyze the provided image containing mathematical formulas and return the text in a machine-readable format.'
-
-SYSTEM_MESSAGE_OCR_vrdu_table_final = 'You are an advanced OCR model designed to accurately extract and interpret data from tables in images. Your task is to analyze the provided image containing a table and return the text in a structured format.'
-
-SYSTEM_MESSAGE_chemdata = "You are an advanced model designed to interpret and analyze SMILES (Simplified Molecular Input Line Entry System) strings, which represent chemical structures. Your task is to extract key information about the chemical structure described by the provided SMILES string"
-'''
 
 SYSTEM_MESSAGE_OCR_textqa = 'You are an advanced OCR model designed to accurately extract text from images. Your task is to analyze the provided image and return the text in a clear, readable format.'
-#vrdu_texteq (5M) poster(4k)
 
 SYSTEM_MESSAGE_OCR_Image = 'You are an advanced model designed to accurately analyze the image with text items. You can cescribe the text information and visual information in the image, including font style, size, color, background, text layout and other visual objects in detail.'
 SYSTEM_MESSAGE_OCR_Image_CN = '你是一个精确分析文本内容图像的先进助手。你可以详细描述图像中的文本信息和视觉信息，包括字体样式、大小、颜色、背景、文本布局和其他视觉对象'
 
-#SYSTEM_MESSAGE_OCR_Chart = 'You are an advanced model designed to analyze and interpret charts, graphs, and data visualizations. Your task is to extract relevant information from the provided chart.'
 
 SYSTEM_MESSAGE_OCR_chart_math = 'You are a professional data visualization analyst. Given a chart image, first accurately perform OCR on any textual and numeric content (including titles, legends, axes, labels, and annotations), and you can convert it into Markdown format, then structure and analyze the extracted data to identify key trends and insights.'
-#'You are an advanced model designed to analyze and interpret charts. Your task is to extract relevant information from the provided image and return the text in a machine-readable format or structured format.'
-#charocr(152k),  mathgeo(102k)   vrdu_equation(5M->4M) vrdu_table(13k) charocr_cap (144k)  MMtab (136k) MMtab_cap (70k)  vrdu_eq_cap (382k) 
 
 SYSTEM_MESSAGE_OCR_table_math = 'You are a data conversion and extraction expert. Given a table image, you can convert it into CSV, HTML, Markdown or LaTeX formats, then extract and summarize the key relationships or insights from the data.'
-#charocr(152k),  mathgeo(102k)   vrdu_equation(5M->4M) vrdu_table(13k) charocr_cap (144k)  MMtab (136k) MMtab_cap (70k)  vrdu_eq_cap (382k) 
 
 SYSTEM_MESSAGE_OCR_mathgeo_math = 'You are a geometry analysis expert. Given a geometric figure, you can convert it into a corresponding LaTeX (e.g., TikZ) representation, then provide insights or interpretations about the structure or properties.'
-#charocr(152k),  mathgeo(102k)   vrdu_equation(5M->4M) vrdu_table(13k) charocr_cap (144k)  MMtab (136k) MMtab_cap (70k)  vrdu_eq_cap (382k) 
 
 SYSTEM_MESSAGE_OCR_equation_math = 'You are an equation analysis expert. Given an equation image, you can convert it into proper LaTeX format, then summarize any key mathematical properties, patterns, or insights it conveys.'
-# vrdu_equation(5M->4M) 
-
-
-#SYSTEM_MESSAGE_OCR_pdf = 'You are an equation analysis expert. Given an equation, you can convert it into proper LaTeX format, then summarize any key mathematical properties, patterns, or insights it conveys.'
-# vrdu_equation(5M->4M) 
-
 
 SYSTEM_MESSAGE_OCR_chart_math_CN = '你是一个高级模型，旨在分析和解释图表、图形、表格、数学公式、数学几何图和数据可视化。你的任务是从提供的图像中提取相关信息，并以机器可读格式或结构化格式返回文本。'
-# vurdu_cn (141K) MMtab_CN (59k) chartocr_cn (115K)
-#SYSTEM_MESSAGE_OCR_poster = "You are an advanced OCR model designed to accurately extract text from posters, advertisements, and other graphic designs. Your task is to analyze the provided image of a poster and return the text in a clear, readable format. "
-
-#SYSTEM_MESSAGE_OCR_vrdu_equation ='You are an advanced OCR model designed to accurately extract and interpret mathematical formulas from images. Your task is to analyze the provided image containing mathematical formulas and return the text in a machine-readable format.'
-
-#SYSTEM_MESSAGE_OCR_vrdu_table_final = 'You are an advanced OCR model designed to accurately extract and interpret data from tables in images. Your task is to analyze the provided image containing a table and return the text in a structured format.'
 
 SYSTEM_MESSAGE_chemdata = "You are an advanced model designed to interpret and analyze SMILES (Simplified Molecular Input Line Entry System) strings, which represent chemical structures. Your task is to extract key information about the chemical structure described by the provided SMILES string"
 
