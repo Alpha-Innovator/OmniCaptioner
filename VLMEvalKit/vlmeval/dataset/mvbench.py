@@ -104,10 +104,8 @@ Based on your observations, select the best option that accurately addresses the
                 pth = os.path.join(pth, 'video/')
                 for filename in os.listdir(pth):
                     if filename.endswith('.zip'):
-                        # 构建完整的文件路径
                         zip_path = os.path.join(pth, filename)
 
-                        # 解压 ZIP 文件
                         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                             zip_ref.extractall(pth)
 

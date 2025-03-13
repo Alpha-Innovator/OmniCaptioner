@@ -28,39 +28,38 @@ class DataProcessor:
             f.write(json.dumps(data_item, ensure_ascii=False) + '\n')
 
     def compute_token_and_image_length(self, output_dir, split_index, data_name, tasktype, num_splits):
-        # 确保输出目录存在
+        # make sure the output directory exists
         Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-        # 计算每个 split 的大小
+        # calculate length of each split
         split_size = math.ceil(len(self.raw_data) / num_splits)
         split_data = self.raw_data[split_index * split_size:(split_index + 1) * split_size]
 
-        # 定义输出文件路径
+        # define the path of the output file
         output_file = Path(output_dir) / f'{data_name}_split{split_index + 1}.jsonl'
         
-        # 加载已存在的 JSONL 文件
+        # load existing jsonl file
         self.load_existing_data(output_file)
         print(f"Loaded {len(self.processed_images)} already processed images for split {split_index + 1}")
 
         for data_item in split_data:
             data_item = json.loads(data_item)
 
-            # 检查是否已处理
+            # check whether the image has been processed
             image_path = data_item.get('image')
             if image_path and image_path in self.processed_images:
                 print(f"Skipping already processed image: {image_path}")
                 continue
 
-            # 获取 conversations 并计算 token 长度
+            # calculate token length
             conversations = '\n'.join([temp['value'] for temp in data_item['conversations']])
             str_length = len(conversations)
             
-            # 计算 token 长度
             token_length = self.processor.tokenizer(
                 conversations, return_tensors='pt', padding=False, truncation=False
             ).input_ids.size(1)
 
-            # 检查并计算 image_token_num
+            # calculate image_token_num
             image_token_num = 0
             if image_path:
                 
@@ -77,13 +76,11 @@ class DataProcessor:
             if image_token_num == 0:
                 continue
 
-            # 更新数据项并保存
             data_item['token_length'] = token_length
             data_item['image_token_num'] = image_token_num
             data_item['image'] = file_path
             data_item['tasktype'] = tasktype
 
-            # 保存当前处理的条目
             self.save_data_item(output_file, data_item)
             self.processed_images.add(image_path)
             print(f"Saved processed image: {image_path}")
@@ -101,13 +98,9 @@ if __name__ == "__main__":
     parser.add_argument("--tasktype", type=str, required=True, help="Name of the dataset")
     args = parser.parse_args()
 
-    # 读取原始 JSONL 数据
     with open(args.data_file, 'r', encoding='utf-8') as f:
         raw_data = f.readlines()
 
-    # 加载处理器
     processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-7B-Instruct/")
-
-    # 实例化并处理指定分区
     data_processor = DataProcessor(raw_data, processor)
     data_processor.compute_token_and_image_length(args.output_dir, args.split_index, args.data_name, args.tasktype, num_splits = args.split_num)

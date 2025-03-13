@@ -104,7 +104,6 @@ class FinetuneConversationDataset(Dataset):
         print('annotations',len(annotations))
 
         if len(annotations) < item_len:
-            # 将列表自身重复拼接直到长度超过 item_len
             times = (item_len // len(annotations)) + 1
             annotations = (annotations * times)[:item_len]
         else:

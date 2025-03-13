@@ -84,7 +84,7 @@ def make_input(prompt, question_content):
 
 
 sys.set_int_max_str_digits(1000000)
-# 设置decimal的精度
+# Set the precision of decimal
 getcontext().prec = 50
 
 
@@ -137,7 +137,7 @@ class MathJudger:
         return new_expr_list
 
     def judge(self, expression1, expression2, precision=1e-8):
-        # (默认 expression1 为 Ground_Truth)
+        # expression1:  Ground_Truth
         precision = precision if isinstance(precision, list) else [precision]
 
         try:
@@ -145,10 +145,8 @@ class MathJudger:
         except:
             return False
         if expression1 == expression2:
-            # print("原生相等")
             return True
 
-        # 去除字符串中的中文字符，因为上面已经判断过了类似回答为"能"或"不能"的含有中文字符的回答情况
         expression1 = re.sub(r'[\u4e00-\u9fff]+', '', expression1)
         expression2 = re.sub(r'[\u4e00-\u9fff]+', '', expression2)
 
@@ -158,21 +156,20 @@ class MathJudger:
         temp_list1 = self.trans_plus_minus_sign(expression1)
         temp_list2 = self.trans_plus_minus_sign(expression2)
 
-        # 设计误差值列表
+        # List of Error Values
         if len(precision) <= 1:
             precision = precision * len(temp_list1)
 
         if len(temp_list1) != len(temp_list2):
             return False
 
-        # 判断两个列表中的元素是否可以两两配对，并且两两相等，由此支持多个回答的比较
+        # Check if the elements of two lists can be paired off in pairs, and the pairs are equal, thereby supporting the comparison of multiple answers
         idx = -1
         while len(temp_list1) != 0:
             idx = (idx + 1) % len(temp_list1)
 
             item1 = temp_list1[idx]
             self.precision = precision[idx]
-            # print(self.precision)
 
             for item2 in temp_list2:
                 if self.is_equal(item1, item2):
@@ -190,26 +187,21 @@ class MathJudger:
     def is_interval(self, epr):
         return epr.startswith(("(", "[")) and epr.endswith((")", "]"))
 
-    # 在进行数值计算前，需要将sympy中的pi符号替换为pi的近似数值
-    # def sympy_sub_pi(self, expression_sympy):
-    #     return expression_sympy.subs(self.pi, math.pi)
 
-    # 默认第一个表达式是 ground_truth
+    # expression1: ground_truth
     def is_equal(self, expression1, expression2):
         if expression1 == expression2 and expression1 != "" and expression2 != "":
-            # print("原生等价")
             return True
 
-        # 先判断是否是两个区间，是的话进行判断相等，不相等则返回 False
+        # Firstly, determine if it is two intervals. If so, check for equality; if not equal, return False.
         if self.is_interval(expression1) and self.is_interval(expression2):
             try:
                 if self.interval_equal(expression1, expression2):
-                    # print("区间等价")
                     return True
             except:
                 return False
 
-        # 再判断是否在数值上相等
+        # Check for equal number
         try:
             if self.numerical_equal(expression1, expression2):
                 # print("数值等价")
@@ -217,31 +209,26 @@ class MathJudger:
         except:
             pass
 
-        # 再判断是否是表达式相等
+        # Check for equal expression
         try:
             if self.expression_equal(expression1, expression2) and not ("=" in expression1 and "=" in expression2):
-                # print("表达式等价")
                 return True
         except:
             pass
 
-        # 再判断是否是等式相等
+        # Check for equal equation
         try:
             if self.equation_equal(expression1, expression2):
-                # print("等式等价")
                 return True
         except:
             pass
 
         return False
 
-    # 判断两个数值在误差允许范围内是否相等
+    # Determine whether two numerical values are equal within the allowed error range.
     def numerical_equal(self, expression1: str, expression2: str, include_percentage: bool = True):
         """
-        (默认 expression1 为 Ground_Truth)
-        函数: 判读两个数值是否在误差允许范围内相等
-        步骤1: 将可能出现的百分号的情况包含进来
-        步骤2: 使用 math.isclose 函数判断是否相等
+        (expression1: Ground_Truth)
         """
         reference = float(expression1)
         prediction = float(expression2)
@@ -257,15 +244,15 @@ class MathJudger:
                 return True
         return False
 
+    # Determine whether two expressions are mathematically equivalent
     def expression_equal(self, exp1, exp2):
         """
-        (默认 expression1 为 Ground_Truth)
-        函数: 判断两个表达式是否在数学意义上等价
-        步骤1: 提取表达式, 防止有的模型会给出"x=1"而不是"1"
-        步骤2: 使用 sympy 库进行等价判断
+        (expression1: Ground_Truth)
+        Function: Determine if two expressions are mathematically equivalent
+        Step 1: Extract the expression, to prevent some models from giving "x=1" instead of "1"
+        Step 2: Use the sympy library for equivalence judgment
         """
 
-        # 只提取等号右边的表达式，一般左边是所求的量
         def extract_expression(expression):
             if "=" in expression:
                 expression = expression.split("=")[1]
@@ -276,7 +263,6 @@ class MathJudger:
 
         exp_too_long = len(exp1) > 300 or len(exp2) > 300
 
-        # 将表达式转换为 sympy 中能够进行处理的格式
         expr1_sym = sympify(parse_latex(exp1))
         expr2_sym = sympify(parse_latex(exp2))
 
@@ -285,7 +271,6 @@ class MathJudger:
         else:
             expr1_sym = self.sympy_sub_pi(expr1_sym)
             expr2_sym = self.sympy_sub_pi(expr2_sym)
-            # 如果输入的表达式可以计算出具体数值的话，则将其进行数值计算的比较
 
             if (expr1_sym.has(sp.Symbol) and not expr2_sym.has(sp.Symbol)) or (
                     not expr1_sym.has(sp.Symbol) and expr2_sym.has(sp.Symbol)):
@@ -323,25 +308,20 @@ class MathJudger:
 
     def equation_equal(self, expression1, expression2):
         """
-        (默认 expression1 为 Ground_Truth)
-        函数: 判断两个方程是否在数学意义上等价
-        步骤1: 将一个方程/等式化简为标准方程, 即等式的右边严格等于0, 接下来只需要判断两个等式的左边是否"等价"
-        步骤2: 使用 sympy 库计算两个等式左边的商, 如果这个商或者这个商的倒数为整数, 那么数学意义上我们可以推导出这两个方程等价👌
+        (expression1: Ground_Truth)
+        Function: Determine if two equations are mathematically equivalent
+        Step 1: Simplify one equation/equality to a standard equation, i.e., the right side of the equation strictly equals 0. Next, only the left sides of the two equations need to be judged for "equivalence"
+        Step 2: Use the sympy library to calculate the quotient of the left sides of the two equations. If this quotient or its reciprocal is an integer, then mathematically we can deduce that these two equations are equivalent
         """
 
-        # 将等式的右边都移到左边，并返回一个 sympy 格式的表达式
         def simplify_equation(latex_eq):
-            # 分割等式的左边和右边
             lhs, rhs = latex_eq.split('=')
 
-            # 使用 parse_latex 解析 LaTeX 表达式
             lhs_expr = parse_latex(lhs)
             rhs_expr = parse_latex(rhs)
 
-            # 创建等式对象
             equation = Eq(lhs_expr, rhs_expr)
 
-            # 化简等式：将等式右边移到左边
             simplified_eq = simplify(equation.lhs - equation.rhs)
 
             return simplified_eq
@@ -352,7 +332,6 @@ class MathJudger:
         division_result_1 = simplify(expr1_sym / expr2_sym)
         division_result_2 = simplify(expr2_sym / expr1_sym)
 
-        # 如果两个方程转换后的式子相除为整数 且非零，则根据推导可知这两个方程等价
         if (division_result_1.is_Integer and division_result_1 != 0) or (
                 division_result_2.is_Integer and division_result_2 != 0):
             return True
@@ -360,20 +339,18 @@ class MathJudger:
             return False
 
     def interval_equal(self, expression1, expression2):
-        # 函数: 判断两个区间是否在数学意义上等价
-        # 步骤1: 简化区间的表达式, 去除无关的符号比如"\left", "\right", 同时将可能出现的"x \in"删去
-        # 步骤2: 对比两个区间的左右符号、中间出现的数学表达式等是否一致
+        # Function: Determine if two intervals are mathematically equivalent
+        # Step 1: Simplify the expression of the interval, remove irrelevant symbols such as "\left", "\right", and delete the possible "x \in"
+        # Step 2: Compare if the left and right symbols, and the mathematical expressions in the middle of the two intervals are consistent
 
         def compare_two_interval(inter1, inter2):
 
-            # 首先比较两边的括号是否一致，一致的话再进行下一步比较
             if inter1[0] != inter2[0] or inter1[-1] != inter2[-1]:
                 return False
 
             inter1 = inter1.strip('[]()')
             inter2 = inter2.strip('[]()')
 
-            # 分割区间的左右部分
             items_1 = inter1.split(',')
             items_2 = inter2.split(',')
 
@@ -401,9 +378,7 @@ class MathJudger:
 
     def preprocess(self, expression1, expression2):
 
-        # 尝试捕获box中的内容，如果有多个则以逗号相连返回，如果一个都没有，则报错
         def extract_boxed_content(latex_str):
-            # 查找所有的 \boxed{...} 结构
             boxed_matches = re.finditer(r'\\boxed{', latex_str)
             results = ""
 
@@ -412,7 +387,6 @@ class MathJudger:
                 end_index = start_index
                 stack = 1
 
-                # 从 \boxed{ 之后开始搜索，直到找到对应的闭合括号
                 while stack > 0 and end_index < len(latex_str):
                     if latex_str[end_index] == '{':
                         stack += 1
@@ -421,14 +395,11 @@ class MathJudger:
                     end_index += 1
 
                 if stack == 0:
-                    # 提取 \boxed{} 内部的内容
                     content = latex_str[start_index:end_index - 1]
                     results += content + ","
                 else:
-                    # 如果括号没有正确闭合，则返回错误信息
                     raise ValueError("Mismatched braces in LaTeX string.")
 
-            # 如果没有匹配到'\boxed{}'字符，则默认提取有内容的文字最后一行中的所有公式部分
             if results == "":
                 last_line_ans = latex_str.strip().split("\n")[-1]
                 dollar_pattern = r"\$(.*?)\$"
@@ -446,7 +417,6 @@ class MathJudger:
             if "\\in " in expression:
                 expression = expression.split("\\in ")[1]
 
-            # 进行特殊字符的替换，这些字符都不影响latex的解析，属于美观/修饰性字符
             for signal in self.special_signal_map:
                 expression = expression.replace(signal, self.special_signal_map[signal])
 
@@ -506,9 +476,7 @@ def extract_answer(is_chinese, model_output, is_deepseek=False):
         else:
             matches = re.findall('The answer is: (.*)', model_output)
 
-        # 检测是否至少找到一个匹配，如果没有就直接整个送进去找\boxed{}
         if matches:
-            # 如果找到多个匹配，取最后一个
             model_answer = matches[-1].strip()
             return model_answer
         else:
@@ -519,9 +487,7 @@ def extract_answer(is_chinese, model_output, is_deepseek=False):
     else:
         matches = re.findall('So the final answer is (.*)', model_output)
 
-    # 检测是否至少找到一个匹配，如果没有就直接整个送进去找\boxed{}
     if matches:
-        # 如果找到多个匹配，取最后一个
         model_answer = matches[-1].strip()
         return model_answer
     else:

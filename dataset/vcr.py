@@ -253,16 +253,6 @@ class VCRDataset(ImageBaseDataset):
         self.language = 'en' if 'EN' in dataset else 'zh'
         self.difficulty = 'easy' if 'EASY' in dataset else 'hard'
 
-    # def build_prompt(self, line):
-    #     msgs = super().build_prompt(line)
-    #     assert msgs[-1]['type'] == 'text'
-    #     if self.language == 'zh':
-    #         msgs[-1]['value'] += '图像中被覆盖的文本是什么？请在不输出解释的情况下还原被覆盖的文本。'
-    #     else:
-    #         msgs[-1]['value'] += ('What is the covered texts in the image? '
-    #                               'Please restore the covered texts without outputting the explanations.')
-    #     return msgs
-
     def evaluate(self, eval_file, **judge_kwargs):
         import multiprocessing
 

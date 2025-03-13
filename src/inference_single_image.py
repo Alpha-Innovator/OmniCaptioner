@@ -170,7 +170,6 @@ def map_system_prompt_image(selected_prompt):
 
 
 def load_image(image_path: str) -> "PIL.Image.Image":
-    """加载图像并转换为RGB格式"""
     try:
         image = Image.open(image_path)
         image = ImageOps.exif_transpose(image).convert("RGB")
@@ -180,8 +179,7 @@ def load_image(image_path: str) -> "PIL.Image.Image":
         return None
 
 def inference_single_image(model_path: str, image_path: str, image_type: str):
-    """单张图像推理函数"""
-    # 加载模型和处理器（只加载一次）
+
     if not hasattr(inference_single_image, "model"):
         inference_single_image.model = Qwen2VLForConditionalGeneration.from_pretrained(
             model_path,
@@ -202,7 +200,6 @@ def inference_single_image(model_path: str, image_path: str, image_type: str):
 
     responses = {'image': os.path.basename(image_path)}
     
-    # 确定要使用的系统提示类型
     type_mapping = {
         'aigc': system_prompt_map_dict['aigc'],
         'natural': system_prompt_map_dict['natural'],

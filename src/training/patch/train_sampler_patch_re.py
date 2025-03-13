@@ -47,7 +47,6 @@ def get_length_grouped_indices(lengths, batch_size, world_size, generator=None, 
     megabatches = [split_to_even_chunks(megabatch, lengths, world_size) for megabatch in megabatches]
     #print('after split_to_even_chunks')#, megabatches[0])
 
-    # 新增的检查代码：检查每个batch的最大token长度和最小token长度
     #for megabatch_idx, megabatch in enumerate(megabatches):
     #    for batch_idx, batch in enumerate(megabatch):
     #        batch_lengths = [lengths[i] for i in batch]

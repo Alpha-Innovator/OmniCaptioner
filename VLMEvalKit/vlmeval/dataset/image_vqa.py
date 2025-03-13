@@ -1196,7 +1196,6 @@ class MMNIAH(ImageBaseDataset):
             output_file = data_path
             split_files = sorted([f for f in os.listdir(data_root) if f.startswith(file_prefix)])
             with open(output_file, 'wb') as outfile:
-                # 逐个读取每个拆分文件并写入到输出文件
                 for filename in split_files:
                     with open(osp.join(data_root, filename), 'rb') as infile:
                         outfile.write(infile.read())
@@ -1284,7 +1283,6 @@ class MMNIAH(ImageBaseDataset):
         context = msgs[-1]['value']
         context = eval(context)
         question = context[0] + '\n' + context[1]
-        # tgt_path是所有图像地址列表
         tgt_path = []
         for i in range(len(msgs) - 1):
             tgt_path.append(msgs[i]['value'])

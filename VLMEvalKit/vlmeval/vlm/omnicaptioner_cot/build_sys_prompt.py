@@ -1,7 +1,3 @@
- 
-
-
-
 SYSTEM_MESSAGE = "You are a helpful assistant."
 SYSTEM_MESSAGE_Detailed = "You are a helpful assistant focused on providing detailed descriptions and background information for the generated images. Analyze the given image and generate a comprehensive caption that includes the visual style, spatial relationships between elements, texture details, descriptions of the main objects, and relevant world knowledge to enhance understanding."
 SYSTEM_MESSAGE_Medium = "You are a helpful assistant specialized in creating medium-length captions for the generated images. Analyze the provided image and generate a caption that captures the key visual elements, while maintaining clarity and coherence."
@@ -73,7 +69,7 @@ def build_sys_prompt(dataset,question_type):
         import random
         p = random.random()
         if 'Accounting' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # choose a system prompt based on the random number
             if p < 0.1:
                 system_prompt = SYSTEM_MESSAGE_OCR_Image
                 function_type = 'OCR_Image'
@@ -81,7 +77,7 @@ def build_sys_prompt(dataset,question_type):
                 system_prompt = SYSTEM_MESSAGE_OCR_table_math
                 function_type = 'OCR_table'
         elif 'Agriculture' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # choose a system prompt based on the random number
             if p  < 0.5:
                 system_prompt = SYSTEM_MESSAGE_Detailed
                 function_type = 'Detailed'
@@ -90,7 +86,7 @@ def build_sys_prompt(dataset,question_type):
                 function_type = 'Detailed_Natural'
 
         elif 'Architecture_and_Engineering' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # choose a system prompt based on the random number
             if p  < 0.5:
                 system_prompt = SYSTEM_MESSAGE_OCR_table_math
                 function_type = 'OCR_table'
@@ -99,7 +95,7 @@ def build_sys_prompt(dataset,question_type):
                 function_type = 'UI'
         
         elif 'Basic_Medical_Science' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # # choose a system prompt based on the random number
             if p < 0.5:
                 system_prompt = SYSTEM_MESSAGE_Detailed
                 function_type = 'Detailed'
@@ -107,7 +103,7 @@ def build_sys_prompt(dataset,question_type):
                 system_prompt = SYSTEM_MESSAGE_Detailed_Natural
                 function_type = 'Detailed_Natural'
         elif 'Art' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # # choose a system prompt based on the random number
             if p  < 0.5:
                 system_prompt = SYSTEM_MESSAGE_Detailed
                 function_type = 'Detailed'
@@ -116,7 +112,7 @@ def build_sys_prompt(dataset,question_type):
                 function_type = 'Detailed_Natural'
         
         elif 'Biology' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # choose a system prompt based on the random number
             if p < 0.5:
                 system_prompt = SYSTEM_MESSAGE_Detailed
                 function_type = 'Detailed'
@@ -125,7 +121,7 @@ def build_sys_prompt(dataset,question_type):
                 function_type = 'Detailed_Natural'
 
         elif 'Chemistry' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # choose a system prompt based on the random number
             if p  < 0.5:
                 system_prompt = SYSTEM_MESSAGE_Detailed
                 function_type = 'Detailed'
@@ -136,7 +132,7 @@ def build_sys_prompt(dataset,question_type):
                 system_prompt = SYSTEM_MESSAGE_chemdata
                 function_type = 'chem'
         elif 'Clinical_Medicine' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # choose a system prompt based on the random number
             if p < 0.5:
                 system_prompt = SYSTEM_MESSAGE_Detailed
                 function_type = 'Detailed'
@@ -145,7 +141,7 @@ def build_sys_prompt(dataset,question_type):
                 function_type = 'Detailed_Natural'
         
         elif 'Computer_Science' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # choose a system prompt based on the random number
             if p < 0.3:
                 system_prompt = SYSTEM_MESSAGE_Detailed
                 function_type = 'Detailed'
@@ -161,7 +157,7 @@ def build_sys_prompt(dataset,question_type):
         
 
         elif 'Design' in question_type:
-            # 根据随机数决定使用哪个系统提示
+            # choose a system prompt based on the random number
             if p < 0.5:
                 system_prompt = SYSTEM_MESSAGE_Detailed
                 function_type = 'Detailed'

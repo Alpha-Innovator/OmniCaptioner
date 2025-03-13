@@ -208,12 +208,10 @@ class Qwen2VLChat(Qwen2VLPromptMixin, BaseModel):
         print(response)
 
         '''if self.cot == True:
-            # 定义匹配直接答案的正则表达式
             import re
             #pattern = r'(?i)(?:the\s*answer\s*is\s*|answer\s*is\s*|final\s*answer\s*is\s*|result\s*is\s*|conclusion\s*is\s*)(.*?)(?:\.|$)'
             #pattern = r'(?i)(?:the\s*answer\s*is\s*|answer\s*is\s*|final\s*answer\s*is\s*|result\s*is\s*|conclusion\s*is\s*)\s*\$?(\d+\.\d{2})'
             pattern = r'(?i)(?:the\s*answer\s*is\s*|answer\s*is\s*|final\s*answer\s*is\s*|result\s*is\s*|conclusion\s*is\s*)\s*([A-Za-z]+|\$\d+\.\d{2})\s*(?:\.|$)'
-            # 尝试找到直接答案
             match = re.search(pattern, response)
             
             if match:

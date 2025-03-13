@@ -145,9 +145,9 @@ class Qwen2VLCap(Qwen2VLPromptMixin, BaseModel):
         else:
             self.summarizer = LLM(model=model_path1,
              #device="cuda:1",
-             #tensor_parallel_size=2,          # 根据GPU数量调整（如4*A100-40G）
+             #tensor_parallel_size=2,   
              tensor_parallel_size=tensor_parallel_size,  
-             gpu_memory_utilization=0.6,       # 显存利用率
+             gpu_memory_utilization=0.6, 
              dtype="bfloat16",
              max_model_len = 113168,#12000,
              )
@@ -263,7 +263,6 @@ class Qwen2VLCap(Qwen2VLPromptMixin, BaseModel):
         # Check if the output file exists
         if not os.path.exists(output_file):
             print(f"文件 {output_file} 不存在，正在创建一个新的文件.")
-            # 如果文件不存在，创建一个空的 jsonl 文件
             with open(output_file, 'w', encoding='utf-8') as file:
                 pass 
 

@@ -74,8 +74,8 @@ class SenseChatVisionWrapper(BaseAPI):
         payload = {
             'iss': ak,
             'exp': int(time.time())
-            + 1800,  # 填写您期望的有效时间，此处示例代表当前时间+30分钟
-            'nbf': int(time.time()) - 5,  # 填写您期望的生效时间，此处示例代表当前时间-5秒
+            + 1800,  # Please fill in the expected validity period, the example here represents the current time + 30 minutes.
+            'nbf': int(time.time()) - 5,  # Enter the effective time you expect, the example here represents the current time minus 5 seconds.
         }
         token = jwt.encode(payload, sk, headers=headers)
         return token

@@ -89,7 +89,7 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
     elif "s3://" in image:
         from data_reader import read_general
         #print(image)
-        image_obj = Image.open(read_general(image)) # 这里为啥不转换成RGB
+        image_obj = Image.open(read_general(image))
     elif image.startswith("data:image"):
         data = image.split(";", 1)[1]
         if data.startswith("base64,"):
@@ -115,7 +115,6 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
         width, height = image.size
         min_pixels = ele.get("min_pixels", MIN_PIXELS)
         max_pixels = ele.get("max_pixels", MAX_PIXELS)
-        #print('ele',ele, 'min_pixels',min_pixels, 'max_pixels', max_pixels)
         resized_height, resized_width = smart_resize(
             height,
             width,
@@ -123,8 +122,6 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
             min_pixels=min_pixels,
             max_pixels=max_pixels,
         )
-    #print('before:',image.size)
-    #print('after',image.size, (resized_width, resized_height))
     image = image.resize((resized_width, resized_height))
    
 
@@ -139,7 +136,6 @@ def process_video_info(video_path):
     # Check if the video is from S3 or local
     if 's3://' in video_path:
         from data_reader import read_general
-        #print(video_path)
         video_bytes = read_general(video_path) # Assuming `client.get` fetches the S3 video as bytes
         video_reader = VideoReader(video_bytes, num_threads=1)
     else:
@@ -167,7 +163,6 @@ def process_video_info(video_path):
 
 
 def fetch_video(ele: dict, image_factor: int = IMAGE_FACTOR) -> torch.Tensor | list[Image.Image]:
-    #breakpoint()
     if isinstance(ele["video"], str):
         # TODO: support http url
 

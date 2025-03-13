@@ -70,21 +70,14 @@ class VideoBaseDataset:
             vid_path = osp.join(self.data_root, video + '.mp4')
             vid = decord.VideoReader(vid_path)
 
-            # 计算视频的总帧数和总时长
             total_frames = len(vid)
             video_fps = vid.get_avg_fps()
             total_duration = total_frames / video_fps
 
-            # 计算需要提取的总帧数
             required_frames = int(total_duration * self.fps)
 
-            # 计算提取帧的间隔
             step_size = video_fps / self.fps
-
-            # 计算提取帧的索引
             indices = [int(i * step_size) for i in range(required_frames)]
-
-            # 提取帧并保存
             frame_paths = self.frame_paths_fps(video, len(indices))
             flag = np.all([osp.exists(p) for p in frame_paths])
             if flag:

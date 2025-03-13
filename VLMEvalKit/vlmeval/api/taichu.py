@@ -13,9 +13,9 @@ class ChatResponse(dict):
     def __getattr__(self, name):
         value = self.get(name)
         if isinstance(value, dict):
-            return ChatResponse(value)  # 如果值是字典，递归包装成 DotDict
+            return ChatResponse(value) 
         elif isinstance(value, list):
-            return [ChatResponse(v) if isinstance(v, dict) else v for v in value]  # 如果值是列表，处理其中的字典
+            return [ChatResponse(v) if isinstance(v, dict) else v for v in value] 
         return value
 
     def __setattr__(self, name, value):

@@ -46,7 +46,6 @@ class TempCompass(ConcatVideoDataset):
             avg_dict['overall']['overall'] += item['overall']
             result.loc[idx, 'acc'] = round(item['success'] / item['overall'] * 100, 2)
         for key, value in avg_dict.items():
-            # 使用 loc 方法添加新行
             result.loc[len(result)] = {
                 'dim.task_type': key,
                 'success': value['success'],
