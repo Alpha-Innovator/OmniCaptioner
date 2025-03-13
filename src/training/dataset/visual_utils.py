@@ -85,8 +85,8 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
         image_obj = Image.open(image[7:])
     elif "s3://" in image:
         from .data_reader import read_general
-        #print(image)
-        image_obj = Image.open(read_general(image)) # 这里为啥不转换成RGB
+       
+        image_obj = Image.open(read_general(image)) 
     elif image.startswith("data:image"):
         data = image.split(";", 1)[1]
         if data.startswith("base64,"):
@@ -112,7 +112,6 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
         width, height = image.size
         min_pixels = ele.get("min_pixels", MIN_PIXELS)
         max_pixels = ele.get("max_pixels", MAX_PIXELS)
-        #print('ele',ele, 'min_pixels',min_pixels, 'max_pixels', max_pixels)
         resized_height, resized_width = smart_resize(
             height,
             width,
@@ -120,8 +119,7 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
             min_pixels=min_pixels,
             max_pixels=max_pixels,
         )
-    #print('before:',image.size)
-    #print('after',image.size, (resized_width, resized_height))
+    
     image = image.resize((resized_width, resized_height))
    
 
@@ -170,17 +168,7 @@ def fetch_video(ele: dict, image_factor: int = IMAGE_FACTOR) -> torch.Tensor | l
         video = ele["video"]
         if video.startswith("file://"):
             video = video[7:]
-        #elif "s3://" in image:
-        #    from data_reader import read_general
-        #    video = read_general(image)
-
-        '''video, audio, info = io.read_video(
-            video,
-            start_pts=ele.get("video_start", 0.0),
-            end_pts=ele.get("video_end", None),
-            pts_unit="sec",
-            output_format="TCHW",
-        )'''
+        
         info ,video = process_video_info(video) #TCHW
         video = video.permute(0,3,1,2) # TCHW
         assert not ("fps" in ele and "nframes" in ele), "Only accept either `fps` or `nframes`"
@@ -222,7 +210,7 @@ def fetch_video(ele: dict, image_factor: int = IMAGE_FACTOR) -> torch.Tensor | l
                 min_pixels=min_pixels,
                 max_pixels=max_pixels,
             )
-        print('max_pixels:',max_pixels,'before:',(height,width),'after:',(resized_height, resized_width))
+        #print('max_pixels:',max_pixels,'before:',(height,width),'after:',(resized_height, resized_width))
         video = transforms.functional.resize(
             video,
             [resized_height, resized_width],
@@ -230,7 +218,7 @@ def fetch_video(ele: dict, image_factor: int = IMAGE_FACTOR) -> torch.Tensor | l
             antialias=True,
         ).float()
 
-       # print('after:',video.size)
+      
         return video
     else:
         assert isinstance(ele["video"], (list, tuple))
