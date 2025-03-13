@@ -71,7 +71,7 @@ OMP_NUM_THREADS=${GPUS} srun torchrun \
   --rdzv_backend=c10d \
   --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
   --max-restarts=3 \
-    src/training/train_caption.py \
+    ./src/training/train_caption.py \
     --deepspeed ./scripts/zero3_offload.json \
     --model_id $MODEL_NAME \
     --freeze_vision_tower False \
