@@ -20,7 +20,7 @@ export OMP_NUM_THREADS=8
 
 
 MASTER_ADDR=$(sinfo -Nh -n $SLURM_NODELIST | head -n 1 | awk '{print $1}')
-# 设置随机 MASTER_PORT
+
 while true; do
     MASTER_PORT=$((RANDOM % 10000 + 10000))
     if ! ss -tuln | grep -q ":$MASTER_PORT "; then
