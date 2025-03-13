@@ -44,7 +44,7 @@ You can place the links to your data files in `./data/caption_data.yaml`.
 
 ### 5. Start finetuning
 ```bash
-bash scripts/finetune_caption.sh
+bash scripts/finetune_caption_slurm.sh
 ```
 ## 🚀 Inference Code
 
