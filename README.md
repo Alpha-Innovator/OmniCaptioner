@@ -7,7 +7,7 @@
 <div align="center">
 
 <p align="center">
-💜 <a href="https://alpha-innovator.github.io/OmniCaptioner-project-page/"><b>HomePage</b></a>&nbsp&nbsp | &nbsp&nbsp🤗 <a href="https://huggingface.co/U4R/OmniCaptioner">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://arxiv.org/abs">Paper</a>&nbsp&nbsp
+💜 <a href="https://alpha-innovator.github.io/OmniCaptioner-project-page/"><b>HomePage</b></a>&nbsp&nbsp | &nbsp&nbsp🤗 <a href="https://huggingface.co/U4R/OmniCaptioner">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://arxiv.org/abs/2504.07089">Paper</a>&nbsp&nbsp
 </p>
 </div>
 
