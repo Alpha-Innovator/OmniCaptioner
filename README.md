@@ -54,7 +54,7 @@ SPLIT_NUM=32
 
 # Loop through all splits (from 0 to 31)
 for SPLIT_INDEX in $(seq 0 31); do
-    python data_processor.py \
+    python pre_token_compute_add_tasktype.py \
       --split_index $SPLIT_INDEX \
       --split_num $SPLIT_NUM \
       --output_dir $OUTPUT_DIR \
@@ -159,7 +159,12 @@ CUDA_VISIBLE_DEVICES=0,1,2,3  nohup python run.py --data MMMU_DEV_VAL --model Om
 
 If you find the provided code or models useful for your research, consider citing them as:
 ```
-
+@article{omnicaptioner,
+  title={OmniCaptioner: One Captioner to Rule Them All},
+  author={Lu, Yiting and Yuan, Jiakang and Li, Zhen and Zhao, Shitian and Qin, Qi and Li, Xinyue and Zhuo, Le and Wen, Licheng and Liu, Dongyang and Cao, Yuewen and others},
+  journal={arXiv preprint arXiv:2504.07089},
+  year={2025}
+}
 ```
 
 
