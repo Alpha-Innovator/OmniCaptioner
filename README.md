@@ -39,8 +39,65 @@ pip install -r requirements.txt
 pip install flash-attn --no-build-isolation
 ```
 ### 4. Prepare data
-You can place the links to your data files in `./data/caption_data.yaml`.
 
+Step1: Compute the image visual token and text token in advance to group together features of the dataset of roughly the same length
+
+You can loop through all 32 splits (for example) using the following bash script:
+process_splits.sh
+```bash
+# Define your arguments
+OUTPUT_DIR="/path/to/output/directory"
+DATA_FILE="/path/to/input/data.jsonl"
+DATA_NAME="dataset_name"
+TASKTYPE="task_name"
+SPLIT_NUM=32
+
+# Loop through all splits (from 0 to 31)
+for SPLIT_INDEX in $(seq 0 31); do
+    python data_processor.py \
+      --split_index $SPLIT_INDEX \
+      --split_num $SPLIT_NUM \
+      --output_dir $OUTPUT_DIR \
+      --data_file $DATA_FILE \
+      --data_name $DATA_NAME \
+      --tasktype $TASKTYPE
+done
+```
+Merge the Processed JSONL Files
+merge_splits.sh
+```bash
+#!/bin/bash
+
+# Define output file to merge into
+FINAL_OUTPUT_FILE="/path/to/output/merged_data.jsonl"
+
+# Concatenate all the splits into the final output file
+cat /path/to/output/directory/*_split*.jsonl > $FINAL_OUTPUT_FILE
+```
+
+Step2: You can place the links to your data files in ``data/omni_caption_pretrain.yaml".
+
+The processed data in the output JSONL file will have the following format:
+```bash
+{
+  "id": "film.jpg",
+  "image": "images/film.jpg",
+  "conversations": [
+    {
+      "from": "human",
+      "value": "Explain the key features of this picture."
+    },
+    {
+      "from": "gpt",
+      "value": "Close-up shot of a scratched symbol resembling an eye or fish, etched into a worn, dark wooden surface. The scratches are uneven and look hastily carved, occupying the center of the frame. Minimalist background with emphasis on the raw texture of aged wood, dimly lit with shadows toward the top right corner, suggesting a single light source above. The grain of the wood is visibly highlighted by soft lighting, creating an intimate and mysterious mood. Dark, moody, high contrast, shallow depth of field, film noir aesthetic, focus on texture and detail, rustic and enigmatic atmosphere."
+    }
+  ],
+  "token_length": 127,
+  "image_token_num": 549,
+  "task_type": "detailed"
+}
+
+```
 ### 5. Start finetuning
 ```bash
 bash scripts/finetune_caption_slurm.sh
