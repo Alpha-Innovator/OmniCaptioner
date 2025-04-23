@@ -130,7 +130,7 @@ You can caption the video data using the following command:
 
 ```python   
 CUDA_VISIBLE_DEVICES=0 python src/inference_single_video.py \
-    --input_dir your_video_path \
+    --input_dir your_video_folder_path \
     --output_file caption_video.jsonl \
     --input_type  video
 ```
