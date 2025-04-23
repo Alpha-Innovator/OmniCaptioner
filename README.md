@@ -130,9 +130,9 @@ You can caption the video data using the following command:
 
 ```python   
 CUDA_VISIBLE_DEVICES=0 python src/inference_single_video.py \
-    --model_path U4R/OmniCaptioner_Video \
-    --image_path your_video_path  \
-    --image_type video 
+    --input_dir your_video_path \
+    --output_file caption_video.jsonl \
+    --input_type  video
 ```
 
 ## 🚀 Evaluation Code with LLM
