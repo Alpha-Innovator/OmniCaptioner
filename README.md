@@ -45,7 +45,7 @@ You can place the links to your data files in `./data/caption_data.yaml`.
 ```bash
 bash scripts/finetune_caption_slurm.sh
 ```
-## 🚀 Inference Code
+## 🚀 Inference Code for Image Caption
 
 You can caption the image with AIGC style using the following command:
 
@@ -61,10 +61,23 @@ You can caption the image with OCR style using the following command:
 
 ```python   
 CUDA_VISIBLE_DEVICES=0 python src/inference_single_image.py \
-    --model_path your_model_path \
+    --model_path U4R/OmniCaptioner \
     --image_path your_image_path  \
     --image_type ocr 
-``` 
+```
+
+## 🚀 Inference Code for Video Caption
+
+You can caption the video data using the following command:
+
+
+```python   
+CUDA_VISIBLE_DEVICES=0 python src/inference_single_video.py \
+    --model_path U4R/OmniCaptioner_Video \
+    --image_path your_video_path  \
+    --image_type video 
+```
+
 ## 🚀 Evaluation Code with LLM
 
 ```python   
