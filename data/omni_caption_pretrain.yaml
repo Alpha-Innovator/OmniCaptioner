@@ -1,5 +1,14 @@
 META:
     
     -
-      path: "caption_data.jsonl"
+      path: "caption_data_natural_image.jsonl"
+      ratio: 1
+
+    -
+      path: "caption_data_visual_text_image.jsonl"
+      ratio: 1
+
+    -
+      path: "caption_data_structured_image.jsonl"
+      ratio: 1
     
