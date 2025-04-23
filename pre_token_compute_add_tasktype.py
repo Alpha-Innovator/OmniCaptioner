@@ -79,7 +79,7 @@ class DataProcessor:
             data_item['token_length'] = token_length
             data_item['image_token_num'] = image_token_num
             data_item['image'] = file_path
-            data_item['tasktype'] = tasktype
+            data_item['task_type'] = tasktype
 
             self.save_data_item(output_file, data_item)
             self.processed_images.add(image_path)
